@@ -27,8 +27,8 @@ header.startup {
   }
 
 header.startup hr {
-    margin-top: 200px;
-    margin-bottom: 30px; 
+    margin-top: 10px;
+    margin-bottom: 10px; 
 }
 
 header.startup h1 {
@@ -43,18 +43,25 @@ header.startup h1 {
   }
   
   .btn-xl {
-    padding: 1rem 2rem; 
+    padding: auto; 
   }
   
   .btn-primary {
     background-color: #1fd8e6;
-    border-color: #2fe3f0; }
+    border-color: #2fe3f0;
+    border-width: 5px;
+    margin-right: 4px;
+    margin-left: 4px;
+    width: 210px;
+    transition: 250ms;
+  }
   
   .btn-primary:hover {
     background-color: #17c6d3;
     border-color: #2fe3f0;
     border-width: 5px;
     cursor: pointer;
+    transform: scale(1.1);
   }
 #game-text{
     text-transform: capitalize;
@@ -62,8 +69,7 @@ header.startup h1 {
     background-color: #00000036;
     padding-top: 10px;
     padding-bottom: 10px;
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin-top: 25px;
 }
 h4{
     font-weight: 100;
