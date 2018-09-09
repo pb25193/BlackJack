@@ -90,7 +90,7 @@ function makeGameText( name, cards, score ){
     return prefix + cardString + suffix + "\n";
 }
 
-let gameDisplay = document.getElementById( "game Text" );
+let gameDisplay = document.getElementById( "game-text" );
 let newGameButton = document.getElementById( "button1" );
 let hitButton = document.getElementById( "button2" );
 let stayButton = document.getElementById( "button3" );
