@@ -54,7 +54,7 @@ function cardToText( card ){
 }
 
 function checkGameOver( pScore, dScore ){
-    if( pScore > 21 || dScore > 21 ){
+    if( pScore > 21 || dScore > 21 || ( stayed && dScore > pScore ) ){
         return 0;
     } else{
         return 1;
@@ -63,7 +63,7 @@ function checkGameOver( pScore, dScore ){
 
 function gameOverRoutine(pScore, dScore, text){
     let winner = "";
-    if( pScore > 21 )
+    if( dScore <= 21 )
         winner = "Dealer";
     else
         winner = "Player";
@@ -74,6 +74,7 @@ function gameOverRoutine(pScore, dScore, text){
     dealerScore = 0,
     gameStatus = 0;
     gameDeck = [];
+    stayed = 0;
     hitButton.style.display = 'none';
     stayButton.style.display = 'none';
     newGameButton.style.display = 'inline';
@@ -101,11 +102,12 @@ let playerCards = [],
     dealerCards = [],
     playerScore = 0,
     dealerScore = 0,
-    gameStatus = 0;
+    status = 0;
     gameDeck = [];
+    stayed = 0;
 
 newGameButton.addEventListener( 'click', function() {
-    gameStatus = 1;
+    status = 1;
     newGameButton.style.display = 'none';
     hitButton.style.display = 'inline';
     stayButton.style.display = 'inline';
@@ -139,20 +141,26 @@ hitButton.addEventListener('click', function(){
 })
 
 stayButton.addEventListener('click', function(){
-    dealerCards.push( getNextCard(gameDeck) );
-    dealerScore = cardsToScore(dealerCards);
-    playerScore = cardsToScore(playerCards);
-    status = checkGameOver( playerScore, dealerScore );
-    if( status == 0 ){
-        let dealerText = makeGameText( "dealer", dealerCards, dealerScore );
-        let playerText = makeGameText( "player", playerCards, playerScore );
-        gameText = "You chose to stay \n" + dealerText + "\n" + playerText + "\n";
-        gameOverRoutine( playerScore, dealerScore, gameText );
-    } else {
-        let dealerText = makeGameText( "dealer", dealerCards, dealerScore );
-        let playerText = makeGameText( "player", playerCards, playerScore );
-        gameDisplay.innerText = "You chose to stay \n" + dealerText + "\n" + playerText;
+    stayed = 1;
+    status = checkGameOver( playerScore, dealerScore );   
+    while( status!=0 ){
+        dealerCards.push( getNextCard(gameDeck) );
+        dealerScore = cardsToScore(dealerCards); 
+        status = checkGameOver( playerScore, dealerScore );   
     }
+    
+    let dealerText = makeGameText( "dealer", dealerCards, dealerScore );
+    let playerText = makeGameText( "player", playerCards, playerScore );
+    gameText = "You chose to stay \n" + dealerText + "\n" + playerText + "\n";
+    gameOverRoutine(playerScore, dealerScore, gameText);
+
+    // if( status == 0 ){
+    //     gameOverRoutine( playerScore, dealerScore, gameText );
+    // } else {
+    //     let dealerText = makeGameText( "dealer", dealerCards, dealerScore );
+    //     let playerText = makeGameText( "player", playerCards, playerScore );
+    //     gameDisplay.innerText = "You chose to stay \n" + dealerText + "\n" + playerText;
+    // }
 })
 
 // let gameDeck = createDeck();
